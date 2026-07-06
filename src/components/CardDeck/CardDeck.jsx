@@ -26,7 +26,7 @@ export default function CardDeck({ words = [] }) {
 
       <div className="relative z-10 flex h-full w-full max-w-4xl select-none flex-col items-center justify-between gap-2 overflow-hidden px-5 py-6 sm:justify-center sm:gap-6 sm:py-16">
         <div
-          className="relative mx-auto aspect-[4/5] w-auto min-h-0 max-h-[65dvh] flex-1 touch-none sm:flex-none sm:h-auto sm:w-full sm:max-w-xs"
+          className="relative mx-auto aspect-[4/5] w-auto min-h-0 max-h-[68dvh] flex-1 touch-none sm:flex-none sm:h-auto sm:w-full sm:max-w-xs"
           style={{ perspective: "1200px" }}
           onWheel={handleWheel}
           onPointerMove={handlePointerMove}
