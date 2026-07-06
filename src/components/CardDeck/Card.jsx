@@ -70,7 +70,6 @@ export default function Card({
               </div>
             </div>
 
-            {/* EXAMPLE 1 */}
             <div className="rounded-xl border border-fuchsia-400/20 bg-fuchsia-500/10 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(255,0,255,0.08)]">
               <div className="text-[10px] uppercase tracking-[0.25em] text-fuchsia-300">
                 Example 1
@@ -80,7 +79,6 @@ export default function Card({
               </div>
             </div>
 
-            {/* EXAMPLE 2 */}
             <div className="rounded-xl border border-amber-300/20 bg-amber-500/10 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(255,180,0,0.08)]">
               <div className="text-[10px] uppercase tracking-[0.25em] text-amber-300">
                 Example 2
