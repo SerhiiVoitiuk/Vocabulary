@@ -26,7 +26,7 @@ export default function CardDeck({ words = [] }) {
 
       <div className="relative z-10 flex h-full w-full max-w-4xl select-none flex-col items-center justify-between gap-2 overflow-hidden px-5 py-6 sm:justify-center sm:gap-6 sm:py-16">
         <div
-          className="relative mx-auto aspect-[3/5] w-auto min-h-0 flex-1 touch-none sm:flex-none sm:h-auto sm:w-full sm:max-w-sm"
+          className="relative mx-auto aspect-[3/5] w-auto min-h-0 max-h-[60dvh] flex-1 touch-none sm:flex-none sm:h-auto sm:w-full sm:max-w-xs"
           style={{ perspective: "1200px" }}
           onWheel={handleWheel}
           onPointerMove={handlePointerMove}
@@ -63,9 +63,9 @@ export default function CardDeck({ words = [] }) {
           })}
         </div>
 
-        <div className="shrink-0">
+        {/* <div className="shrink-0">
           <DeckReadout index={frontCard?.id ?? 0} name={frontCard?.word} />
-        </div>
+        </div> */}
 
         <div className="max-w-xs shrink-0 text-center text-xs leading-relaxed text-fuchsia-100/60">
           Клік — перевернути картку. Свайп або скрол — гортати колоду.
