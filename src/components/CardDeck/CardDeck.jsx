@@ -34,7 +34,7 @@ export default function CardDeck({ words = [] }) {
         >
           {cards.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center rounded-xl border border-fuchsia-500/20 bg-purple-950/40 text-sm text-fuchsia-100/60">
-              Завантаження слів…
+              Loading…
             </div>
           )}
           {order.map((id, slot) => {
