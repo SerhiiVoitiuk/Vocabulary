@@ -24,9 +24,9 @@ export default function CardDeck({ words = [] }) {
       <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
       <div className="pointer-events-none absolute right-24 top-0 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
 
-      <div className="relative z-10 flex w-full max-w-8xl select-none flex-col items-center gap-6 px-5 py-16">
+      <div className="relative z-10 flex w-full max-w-8xl select-none flex-col items-center gap-6 pb-24 pt-10">
         <div
-          className="relative mx-auto aspect-square w-full max-w-xs touch-none sm:max-w-sm"
+          className="relative mx-auto aspect-[3/5] w-full max-w-xs touch-none sm:max-w-sm"
           onWheel={handleWheel}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
