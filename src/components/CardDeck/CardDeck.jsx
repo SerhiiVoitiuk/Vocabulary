@@ -19,14 +19,15 @@ export default function CardDeck({ words = [] }) {
   } = useCardDeck(words);
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-b from-purple-950 via-fuchsia-950 to-black">
+    <div className="relative flex h-dvh w-full items-center justify-center overflow-hidden bg-gradient-to-b from-purple-950 via-fuchsia-950 to-black">
       <div className="pointer-events-none absolute -top-16 -left-16 h-72 w-72 rounded-full bg-fuchsia-600/30 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
       <div className="pointer-events-none absolute right-24 top-0 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
 
-      <div className="relative z-10 flex w-full max-w-8xl select-none flex-col items-center gap-6 pb-24 pt-10">
+      <div className="relative z-10 flex h-full w-full max-w-4xl select-none flex-col items-center justify-between gap-2 overflow-hidden px-5 py-6 sm:justify-center sm:gap-6 sm:py-16">
         <div
-          className="relative mx-auto aspect-[3/5] w-full max-w-xs touch-none sm:max-w-sm"
+          className="relative mx-auto aspect-[3/5] w-auto min-h-0 flex-1 touch-none sm:flex-none sm:h-auto sm:w-full sm:max-w-sm"
+          style={{ perspective: "1200px" }}
           onWheel={handleWheel}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -62,10 +63,12 @@ export default function CardDeck({ words = [] }) {
           })}
         </div>
 
-        <DeckReadout index={frontCard?.id ?? 0} name={frontCard?.name} />
+        <div className="shrink-0">
+          <DeckReadout index={frontCard?.id ?? 0} name={frontCard?.word} />
+        </div>
 
-        <div className="max-w-xs text-center text-xs leading-relaxed text-fuchsia-100/60">
-          Click — flip the card. Swipe or scroll — navigate through the deck.
+        <div className="max-w-xs shrink-0 text-center text-xs leading-relaxed text-fuchsia-100/60">
+          Клік — перевернути картку. Свайп або скрол — гортати колоду.
         </div>
 
         {/* <AddCardForm onAdd={addCard} /> */}
