@@ -136,7 +136,7 @@ export default function CardDeck({ words = [] }) {
       <div className="relative z-10 flex h-full w-full max-w-4xl select-none flex-col items-center justify-between gap-2 overflow-hidden px-5 py-6 sm:justify-center sm:gap-6 sm:py-16">
         <div
           className="relative mx-auto aspect-[3/5] w-auto min-h-0 max-h-[70dvh] max-w-[85vw] flex-1 touch-none sm:flex-none sm:h-auto sm:max-h-none sm:w-full sm:max-w-sm"
-          style={{ perspective: "1200px" }}
+          style={{ perspective: "1200px", WebkitPerspective: "1200px" }}
           onWheel={handleWheel}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}

@@ -19,6 +19,7 @@ const Card = forwardRef(function Card(
           transformStyle: "preserve-3d",
           WebkitTransformStyle: "preserve-3d",
           transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          WebkitTransform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
           willChange: "transform",
         }}
       >
@@ -38,7 +39,7 @@ const Card = forwardRef(function Card(
           <div className="absolute left-3 top-3 font-serif text-xs tracking-wide text-white/60">
             {num}
           </div>
-          <div className="relative z-10 break-words bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text px-2 text-center text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-transparent drop-shadow-lg sm:text-5xl">
+          <div className="relative z-10 break-words text-yellow-300 from-amber-400 via-yellow-300 to-amber-400 bg-clip-text px-2 text-center text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-transparent drop-shadow-lg sm:text-5xl">
             {card.word}
           </div>
         </div>
@@ -50,6 +51,7 @@ const Card = forwardRef(function Card(
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
+            WebkitTransform: "rotateY(180deg)",
           }}
         >
           <div className="mt-5 shrink-0 break-words bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-center text-2xl font-extrabold italic uppercase leading-tight tracking-tight text-transparent drop-shadow">
