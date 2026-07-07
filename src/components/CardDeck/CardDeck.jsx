@@ -1,18 +1,42 @@
 import { useCallback, useLayoutEffect, useRef } from "react";
+import { useState } from "react";
 import gsap from "gsap";
 import Card from "./Card";
-import AddCardForm from "./AddCardForm";
-import DeckReadout from "./DeckReadout";
 import { useCardDeck } from "./useCardDeck";
 import { SLOTS } from "./utils/constants";
+import AddWordModal from "./AddWordModal";
+import { createNewWord, updateWord } from "../../lib/appwriteConfig";
 
 export default function CardDeck({ words = [] }) {
-  const { cards, order, flipped, frontCard, addCard, next, prev, toggleFlip } =
+  const { cards, order, flipped, next, prev, toggleFlip, addCard, updateCard } =
     useCardDeck(words);
+  const [modalState, setModalState] = useState(null);
 
   const cardRefs = useRef(new Map());
   const dragRef = useRef(null); // { id, startX, startY, dx, dy, time }
   const hasAnimatedRef = useRef(false);
+
+  const handleModalSubmit = async (data) => {
+    if (modalState?.type === "edit") {
+      const card = modalState.card;
+      await updateWord(card.docId, data);
+      updateCard(card.id, data);
+    } else {
+      const saved = await createNewWord(
+        data.word,
+        data.translation,
+        data.example1,
+        data.example2,
+      );
+      addCard(
+        data.word,
+        data.translation,
+        data.example1,
+        data.example2,
+        saved.$id,
+      );
+    }
+  };
 
   const setCardRef = useCallback(
     (id) => (node) => {
@@ -158,6 +182,7 @@ export default function CardDeck({ words = [] }) {
                 isFront={slot === 0}
                 isFlipped={flipped.has(id)}
                 onPointerDown={handlePointerDown(id)}
+                onEdit={(card) => setModalState({ type: "edit", card })}
               />
             );
           })}
@@ -167,8 +192,24 @@ export default function CardDeck({ words = [] }) {
           Tap or click to flip the card. Swipe or scroll to browse the deck.
         </div>
 
-        {/* <AddCardForm onAdd={addCard} /> */}
+        <button
+          type="button"
+          onClick={() => setModalState({ type: "add" })}
+          className="shrink-0 rounded-full border border-fuchsia-500/40 bg-white/5 px-5 py-2 text-xs uppercase tracking-wide text-white hover:bg-white/10"
+        >
+          + Add Word
+        </button>
       </div>
+
+      <AddWordModal
+        isOpen={modalState !== null}
+        onClose={() => setModalState(null)}
+        onSubmit={handleModalSubmit}
+        initialValues={
+          modalState?.type === "edit" ? modalState.card : undefined
+        }
+        submitLabel={modalState?.type === "edit" ? "Зберегти" : "Додати"}
+      />
     </div>
   );
 }

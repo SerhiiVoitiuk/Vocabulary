@@ -4,7 +4,7 @@ import StarField from "./StarField";
 const FLIP_DURATION = 500; // мс — має збігатися з тривалістю анімації нижче
 
 const Card = forwardRef(function Card(
-  { card, isFront, isFlipped, onPointerDown },
+  { card, isFront, isFlipped, onPointerDown, onEdit },
   ref,
 ) {
   const num = String(card.id + 1).padStart(2, "0");
@@ -92,8 +92,21 @@ const Card = forwardRef(function Card(
               )}
             </div>
 
-            <div className="mt-2 shrink-0 text-center text-xs tracking-wide text-fuchsia-100/50">
-              ← клікніть, щоб повернути
+            <div className="mt-2 flex shrink-0 items-center justify-between gap-2">
+              <span className="text-xs tracking-wide text-fuchsia-100/50">
+                ← Click to go back
+              </span>
+              <button
+                type="button"
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit?.(card);
+                }}
+                className="shrink-0 rounded-md border border-cyan-400/40 bg-cyan-400/10 px-3 py-1 text-xs uppercase tracking-wide text-cyan-200 hover:bg-cyan-400/20"
+              >
+                Edit
+              </button>
             </div>
           </div>
         )}
