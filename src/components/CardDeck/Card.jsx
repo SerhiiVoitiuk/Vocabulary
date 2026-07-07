@@ -39,7 +39,7 @@ const Card = forwardRef(function Card(
           <div className="absolute left-3 top-3 font-serif text-xs tracking-wide text-white/60">
             {num}
           </div>
-          <div className="relative z-10 break-words text-yellow-300 from-amber-400 via-yellow-300 to-amber-400 bg-clip-text px-2 text-center text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-transparent drop-shadow-lg sm:text-5xl">
+          <div className="relative z-10 break-words px-2 text-center text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow-lg sm:text-5xl">
             {card.word}
           </div>
         </div>
