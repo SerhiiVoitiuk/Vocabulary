@@ -19,6 +19,7 @@ const Card = forwardRef(function Card(
           transformStyle: "preserve-3d",
           WebkitTransformStyle: "preserve-3d",
           transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          willChange: "transform",
         }}
       >
         {/* ПЕРЕДНЯ СТОРОНА — слово по центру, майже на весь розмір картки */}
