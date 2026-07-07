@@ -1,28 +1,16 @@
+import { forwardRef } from "react";
 import StarField from "./StarField";
 
-export default function Card({
-  card,
-  transform,
-  opacity,
-  zIndex,
-  isFront,
-  isFlipped,
-  isDragging,
-  onPointerDown,
-}) {
+const Card = forwardRef(function Card(
+  { card, isFront, isFlipped, onPointerDown },
+  ref,
+) {
   const num = String(card.id + 1).padStart(2, "0");
 
   return (
     <div
-      className={`absolute inset-0 cursor-grab rounded-xl shadow-2xl active:cursor-grabbing ${
-        isDragging ? "transition-none" : "transition-all duration-500 ease-out"
-      }`}
-      style={{
-        transform,
-        opacity,
-        zIndex,
-        pointerEvents: isFront ? "auto" : "none",
-      }}
+      ref={ref}
+      className="absolute inset-0 cursor-grab rounded-xl shadow-2xl active:cursor-grabbing"
       onPointerDown={onPointerDown}
     >
       <div
@@ -32,67 +20,58 @@ export default function Card({
           transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
       >
+        {/* ПЕРЕДНЯ СТОРОНА — слово по центру, майже на весь розмір картки */}
         <div
-          className={`absolute inset-0 flex flex-col overflow-hidden rounded-xl border bg-gradient-to-br from-purple-900 to-purple-950 p-4 ${
+          className={`absolute inset-0 flex items-center justify-center overflow-hidden rounded-xl border bg-gradient-to-br from-purple-900 to-purple-950 p-4 ${
             isFront ? "border-fuchsia-500/60" : "border-fuchsia-500/20"
           }`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <div className="font-serif text-xs tracking-wide text-white">
+          <div className="absolute inset-0 opacity-40">
+            <StarField seed={card.id + 1} />
+          </div>
+          <div className="absolute left-3 top-3 font-serif text-xs tracking-wide text-white/60">
             {num}
           </div>
-          <StarField seed={card.id + 1} />
-          <div className="flex flex-1 items-center justify-center font-serif text-5xl text-white drop-shadow">
+          <div className="relative z-10 break-words bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text px-2 text-center text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-transparent drop-shadow-lg sm:text-5xl">
             {card.word}
           </div>
         </div>
 
+        {/* ЗАДНЯ СТОРОНА — слово зверху, переклад і приклади знизу окремими виділеними блоками */}
         <div
-          className="absolute inset-0 flex flex-col justify-between rounded-xl border border-fuchsia-500/20 bg-gradient-to-br from-fuchsia-950 to-purple-950 p-4"
+          className="absolute inset-0 flex flex-col overflow-hidden rounded-xl border border-fuchsia-500/20 bg-gradient-to-br from-fuchsia-950 to-purple-950 p-4"
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
-          <div className="text-xs uppercase tracking-widest text-white">
-            Card №{num}
+          <div className="mt-5 shrink-0 break-words bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-center text-2xl font-extrabold italic uppercase leading-tight tracking-tight text-transparent drop-shadow">
+            {card.word}
           </div>
-          <div className="flex flex-1 flex-col justify-center gap-4 text-white">
-            {/* WORD (головний акцент) */}
-            <div className="text-center font-serif text-4xl tracking-wide text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]">
-              {card.word}
-            </div>
 
-            {/* TRANSLATION */}
-            <div className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,255,0.08)]">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-cyan-300">
-                Translation
+          <div className="mt-15 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto">
+            {card.translation && (
+              <div className="rounded-lg border border-cyan-400/40 bg-cyan-400/10 px-3 py-2 text-center font-serif text-base font-semibold text-cyan-200">
+                {card.translation}
               </div>
-              <div className="text-base text-cyan-100 font-serif">
-                {card.translation || "Coming soon"}
+            )}
+            {card.example1 && (
+              <div className="rounded-lg border-l-4 border-fuchsia-500 bg-white/5 px-3 py-5 text-xs italic leading-snug text-white/90">
+                {card.example1}
               </div>
-            </div>
-
-            <div className="rounded-xl border border-fuchsia-400/20 bg-fuchsia-500/10 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(255,0,255,0.08)]">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-fuchsia-300">
-                Example 1
+            )}
+            {card.example2 && (
+              <div className="rounded-lg border-l-4 border-fuchsia-500 bg-white/5 px-3 py-2 text-xs italic leading-snug text-white/90">
+                {card.example2}
               </div>
-              <div className="text-sm text-white/90 leading-snug">
-                {card.example1 || "Example coming soon"}
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-amber-300/20 bg-amber-500/10 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(255,180,0,0.08)]">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-amber-300">
-                Example 2
-              </div>
-              <div className="text-sm text-white/90 leading-snug">
-                {card.example2 || "Example coming soon"}
-              </div>
-            </div>
+            )}
           </div>
-          <div className="text-xs tracking-wide text-fuchsia-100/60">
-            ← Click to flip
+
+          <div className="mt-2 shrink-0 text-center text-xs tracking-wide text-fuchsia-100/50">
+            ← клікніть, щоб повернути
           </div>
         </div>
       </div>
     </div>
   );
-}
+});
+
+export default Card;
