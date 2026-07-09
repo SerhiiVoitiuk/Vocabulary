@@ -54,7 +54,7 @@ const Card = forwardRef(function Card(
             <div className="absolute left-3 top-3 font-serif text-xs tracking-wide text-white/60">
               {num}
             </div>
-            <div className="relative z-10 break-words px-2 text-center text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow-lg sm:text-5xl">
+            <div className="relative z-10 break-words px-2 text-center text-3xl lg:text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow-lg">
               {card.word}
             </div>
           </div>
@@ -70,7 +70,7 @@ const Card = forwardRef(function Card(
               WebkitBackfaceVisibility: "hidden",
             }}
           >
-            <div className="shrink-0 break-words px-2 text-center text-2xl lg:text-3xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow">
+            <div className="shrink-0 break-words px-2 text-center text-3xl lg:text-4xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow">
               {card.word}
             </div>
 

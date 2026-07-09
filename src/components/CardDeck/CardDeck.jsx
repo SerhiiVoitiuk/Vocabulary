@@ -6,35 +6,55 @@ import { useCardDeck } from "./useCardDeck";
 import { SLOTS } from "./utils/constants";
 import AddWordModal from "./AddWordModal";
 import { createNewWord, updateWord } from "../../lib/appwriteConfig";
+import Toast from "./Toast";
+import { useToast } from "./useToast";
 
 export default function CardDeck({ words = [] }) {
   const { cards, order, flipped, next, prev, toggleFlip, addCard, updateCard } =
     useCardDeck(words);
   const [modalState, setModalState] = useState(null);
+  const { toast, showToast } = useToast();
+  const seenIds = useRef(new Set());
 
   const cardRefs = useRef(new Map());
   const dragRef = useRef(null); // { id, startX, startY, dx, dy, time }
   const hasAnimatedRef = useRef(false);
 
   const handleModalSubmit = async (data) => {
-    if (modalState?.type === "edit") {
-      const card = modalState.card;
-      await updateWord(card.docId, data);
-      updateCard(card.id, data);
-    } else {
-      const saved = await createNewWord(
-        data.word,
-        data.translation,
-        data.example1,
-        data.example2,
-      );
-      addCard(
-        data.word,
-        data.translation,
-        data.example1,
-        data.example2,
-        saved.$id,
-      );
+    try {
+      if (modalState?.type === "edit") {
+        const card = modalState.card;
+        await updateWord(card.docId, data);
+        updateCard(card.id, data);
+
+        const el = cardRefs.current.get(card.id);
+        if (el) {
+          gsap.fromTo(
+            el,
+            { scale: 1.06 },
+            { scale: 1, duration: 0.4, ease: "power2.out", overwrite: "auto" },
+          );
+        }
+        showToast("word updated successfully");
+      } else {
+        const saved = await createNewWord(
+          data.word,
+          data.translation,
+          data.example1,
+          data.example2,
+        );
+        addCard(
+          data.word,
+          data.translation,
+          data.example1,
+          data.example2,
+          saved.$id,
+        );
+        showToast("word added successfully");
+      }
+    } catch (error) {
+      showToast("error occurred while performing the function", "error");
+      throw error;
     }
   };
 
@@ -64,8 +84,22 @@ export default function CardDeck({ words = [] }) {
           zIndex: cfg.z,
           pointerEvents: slot === 0 ? "auto" : "none",
         };
+
+        const isNew = !seenIds.current.has(id);
+        seenIds.current.add(id);
         if (instant) {
           gsap.set(el, vars);
+        } else if (isNew) {
+          gsap.fromTo(
+            el,
+            { ...vars, scale: vars.scale * 0.7, opacity: 0 },
+            {
+              ...vars,
+              duration: isMobile ? 0.45 : 0.6,
+              ease: "back.out(1.6)",
+              overwrite: "auto",
+            },
+          );
         } else {
           gsap.to(el, {
             ...vars,
@@ -167,7 +201,8 @@ export default function CardDeck({ words = [] }) {
           onPointerCancel={handlePointerUp}
         >
           {cards.length === 0 && (
-            <div className="absolute inset-0 flex items-center justify-center rounded-xl border border-fuchsia-500/20 bg-purple-950/40 text-sm text-fuchsia-100/60">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl border border-fuchsia-500/20 bg-purple-950/40 text-sm text-fuchsia-100/60">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-fuchsia-400/30 border-t-fuchsia-400" />
               Loading words…
             </div>
           )}
@@ -212,6 +247,8 @@ export default function CardDeck({ words = [] }) {
         }
         submitLabel={modalState?.type === "edit" ? "Save" : "Add Word"}
       />
+
+      <Toast toast={toast} />
     </div>
   );
 }
