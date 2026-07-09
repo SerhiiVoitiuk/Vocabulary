@@ -70,30 +70,30 @@ const Card = forwardRef(function Card(
               WebkitBackfaceVisibility: "hidden",
             }}
           >
-            <div className="shrink-0 break-words px-2 text-center text-2xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow">
+            <div className="shrink-0 break-words px-2 text-center text-2xl lg:text-3xl font-extrabold italic uppercase leading-tight tracking-tight text-yellow-300 drop-shadow">
               {card.word}
             </div>
 
-            <div className="mt-3 flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
+            <div className="mt-3 lg:mt-8 flex min-h-0 flex-1 flex-col gap-2 lg:gap-10 overflow-y-auto">
               {card.translation && (
-                <div className="rounded-lg border border-cyan-400/40 bg-cyan-400/10 px-3 py-2 text-center font-serif text-base font-semibold text-cyan-200">
+                <div className="rounded-lg border border-cyan-400/40 bg-cyan-400/10 px-3 py-2 text-center lg:text-2xl font-serif text-base font-semibold text-cyan-200">
                   {card.translation}
                 </div>
               )}
               {card.example1 && (
-                <div className="rounded-lg border-l-4 border-fuchsia-500 bg-white/5 px-3 py-2 text-xs italic leading-snug text-white/90">
+                <div className="rounded-lg border-l-4 border-fuchsia-500 bg-white/5 px-3 py-2 text-xs lg:text-2xl italic leading-snug text-white/90">
                   {card.example1}
                 </div>
               )}
               {card.example2 && (
-                <div className="rounded-lg border-l-4 border-fuchsia-500 bg-white/5 px-3 py-2 text-xs italic leading-snug text-white/90">
+                <div className="rounded-lg border-l-4 border-fuchsia-500 bg-white/5 px-3 py-2 text-xs lg:text-2xl italic leading-snug text-white/90">
                   {card.example2}
                 </div>
               )}
             </div>
 
             <div className="mt-2 flex shrink-0 items-center justify-between gap-2">
-              <span className="text-xs tracking-wide text-fuchsia-100/50">
+              <span className="text-xs lg:text-1xl tracking-wide text-fuchsia-100/50">
                 ← Click to go back
               </span>
               <button
@@ -103,7 +103,7 @@ const Card = forwardRef(function Card(
                   e.stopPropagation();
                   onEdit?.(card);
                 }}
-                className="shrink-0 rounded-md border border-cyan-400/40 bg-cyan-400/10 px-3 py-1 text-xs uppercase tracking-wide text-cyan-200 hover:bg-cyan-400/20"
+                className="shrink-0 rounded-md border border-cyan-400/40 bg-cyan-400/10 px-3 py-1 lg:py-2 lg:px-5 text-xs lg:text-[16px] uppercase tracking-wide text-cyan-200 hover:bg-cyan-400/20"
               >
                 Edit
               </button>

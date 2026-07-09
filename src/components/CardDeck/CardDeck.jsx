@@ -168,10 +168,10 @@ export default function CardDeck({ words = [] }) {
         >
           {cards.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center rounded-xl border border-fuchsia-500/20 bg-purple-950/40 text-sm text-fuchsia-100/60">
-              Завантаження слів…
+              Loading words…
             </div>
           )}
-          {order.map((id, slot) => {
+          {order.slice(0, SLOTS.length).map((id, slot) => {
             const card = cards.find((c) => c.id === id);
             if (!card) return null;
             return (
@@ -188,17 +188,19 @@ export default function CardDeck({ words = [] }) {
           })}
         </div>
 
-        <div className="max-w-xs shrink-0 text-center text-xs leading-relaxed text-fuchsia-100/60">
-          Tap or click to flip the card. Swipe or scroll to browse the deck.
-        </div>
+        <div className="flex flex-col items-center gap-2 sm:gap-10 lg:gap-14 lg:mt-20">
+          <div className="max-w-xs text-center text-xs lg:text-2xl leading-relaxed text-fuchsia-100/60">
+            Tap or click to flip the card. Swipe or scroll to browse the deck.
+          </div>
 
-        <button
-          type="button"
-          onClick={() => setModalState({ type: "add" })}
-          className="shrink-0 rounded-full border border-fuchsia-500/40 bg-white/5 px-5 py-2 text-xs uppercase tracking-wide text-white hover:bg-white/10"
-        >
-          + Add Word
-        </button>
+          <button
+            type="button"
+            onClick={() => setModalState({ type: "add" })}
+            className="rounded-full border border-fuchsia-500/40 bg-white/5 px-5 py-2 sm:px-7 lg:px-10 sm:py-3 lg:py-5 text-xs text-bold lg:text-2xl uppercase tracking-wide text-white hover:bg-white/10"
+          >
+            + Add Word
+          </button>
+        </div>
       </div>
 
       <AddWordModal
@@ -208,7 +210,7 @@ export default function CardDeck({ words = [] }) {
         initialValues={
           modalState?.type === "edit" ? modalState.card : undefined
         }
-        submitLabel={modalState?.type === "edit" ? "Зберегти" : "Додати"}
+        submitLabel={modalState?.type === "edit" ? "Save" : "Add Word"}
       />
     </div>
   );
